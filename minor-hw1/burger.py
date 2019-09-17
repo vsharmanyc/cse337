@@ -20,9 +20,9 @@ def burger(order):
     		else:
     			return "unrecognized order code"
     	if protiens == 1 and 0 <= toppings <= 5 and 0 <= condiments <=2:
-    		if order[0] == "B":
+    		if "B" in order:
     			return 0.5 * toppings + 2.0
-    		elif order[0] == "T":
+    		elif "T" in order:
     			return 0.5 * toppings + 2.5
     		else:
     			return 0.5 * toppings + 2.25

@@ -10,15 +10,15 @@ def printMatches(regex, strings):
 list which part of the string will be matched. If not, then state "no match".
 """
 
-strings = ["balloons", "FOODY", "bookstore", "Look", "PoolRoOM"]
+strings = ["balloons", "FOODY", "bookstore", "\"Look\"", "PoolRoOM"]
 print("matched strings:")
 printMatches("[^O]*o+", strings)
 
 """
-balloons
-bookstore
-Look
-PoolRoOM
+balloons     --- balloo
+bookstore    --- booksto
+Look         --- "Loo
+PoolRoOM     --- PoolRo
 """
 
 """
@@ -46,7 +46,7 @@ printMatches(regex, badDateStrings)
 
 
 """
-(5 points) You have been assigned to validate user identification numbers for a new
+3. (5 points) You have been assigned to validate user identification numbers for a new
 computer system. A valid user identification number consists of an even number (as
 defined below), followed by a single dash, followed by three digits, followed by another
 single dash, followed by an odd number (as defined below).
@@ -63,7 +63,7 @@ Define a regular expression that will match this particular pattern and ONLY thi
 """
 idStrings = ["0000000000-000-000000000000003", "1032-857-6846841165", "2130-405-3649", "8-112-4637281"]
 badIdStrings = ["420-2-69", "666-420-100", "445-917-307"]
-regex = "^(\d*[02468])-\d\d\d-(\d*[13579])$"
+regex = "^(\d*[02468])-\d{3}-(\d*[13579])$"
 
 print("\nidStrings matches output:")
 printMatches(regex, idStrings)
@@ -71,3 +71,76 @@ print("\nbadIdStrings matches output:")
 printMatches(regex, badIdStrings)
 
 #only the valid ids got printed and not the bad ones
+
+
+"""
+4. (10 points) An IPv4 (Internet Protocol version 4) address consists of exactly four integer
+values (each in the range 0–255), separated by periods (this is called dotted-quad
+representation). Leading zeros are not permitted. For example, 128.151.220.14 and
+127.0.0.1 are valid IPv4 addresses, but 209.337.14.1 and 230.145.09.11 are not (337 is too
+large, and "09" has a leading zero).
+Define a regular expression that will match valid IPv4 dotted-quad addresses and ONLY
+those addresses. BE CAREFUL when creating the part of your pattern that matches a
+number in the range 0–255; you may need to define several patterns (for different ranges of
+numbers) and combine them using alternation.
+"""
+
+addresses = ["128.151.220.14","127.0.0.1","249.209.255.0","0.0.0.0"]
+badAddresses = ["209.337.14.1","230.145.09.11"]
+regex = "^((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]).){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$"
+
+print("\naddresses matches output:")
+printMatches(regex, addresses)
+print("\nbadAddresses matches output:")
+printMatches(regex, badAddresses)
+
+#only the valid addresses got printed and not the bad ones
+
+
+"""
+5. (15 points) For each of the following Perl regular expressions, give a complete and precise
+description of the function of the regular expression, plus a related example string:
+(a) /"([^"]*)"/
+	
+	any or no sequence of characters, except for a double quote, between two doubles quotes
+
+	ex: "kjhkjh"
+
+(b) /[-+]?\d+(\.\d*)?F\b/
+
+	Zero or one occurrances of either + or -,
+	followed by a digit between 0-9 inclusive,
+	followed by a dot,
+	followed by any number of digits,
+	followed by a F,
+	followed by either nothing or a space which is then followed by any or no sequence of characters
+
+	ex: -4.015F
+	
+
+(c) /(\D{2,}).*\[\1\]/
+
+	2 or more occurances of any non digit character (lets calls this sequence of characters as group 1),
+	followed by any number of characters except for a newline,
+	followed by [,
+	followed by the characters used in group 1,
+	followed by ]
+
+(d) /((.*?)\d)\s\2/
+
+ any number of characters except for a newline (lets call this sequence of characters group 2), 
+ followed by a digit between 0-9 inclusive,
+ followed by a white space character,
+ followed by the characters used in group 2
+
+(e) /^[0-9]+\/\d+([+\-*\/]\=|([+]{2}|[-]{2}));$/ 
+ 
+  starts one or more instances of a number between 0-9 inclusive, 
+  followed by a forward slash, 
+  followed by one or more instances of a number between 0-9 inclusive,
+  followed by one of the following 3 groups of characters
+  group 1: +, or -, or *, or / then followed by a =
+  group 2: ++
+  group 3: --
+  ends with a semicolon
+"""  

@@ -6,7 +6,7 @@ my $output = qx(echo \$PATH);
 chomp $output;
 
 #store each directory name using regex to parse out forward slashes in an array
-my @arr = $output =~ /[^\/]+/g;
+my @arr = $output =~ m/[^\/]+/g;
 
 #print every directory name in the array on a new line
 foreach my $directory (@arr) {

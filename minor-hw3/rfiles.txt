@@ -1,5 +1,4 @@
 /etc/shells
 /bin/pwd
-/vmlinuz
 /usr/bin/xxd
 ./names.txt

@@ -85,6 +85,24 @@ number in the range 0–255; you may need to define several patterns (for differ
 numbers) and combine them using alternation.
 """
 
+"""
+(25[0-5]) : 250 - 255
+(2[0-4]\d) : 200 - 249
+(1\d\d) : 100 - 199
+([1-9]\d) : 10 - 99
+\d : 0 - 9
+
+(25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d : 0 - 255
+
+((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)\. : [0 - 255].
+
+(((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)\.){3} : [0 - 255].[0 - 255].[0 - 255].
+
+(((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)\.){3}((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d) : [0 - 255].[0 - 255].[0 - 255].[0 - 255]
+
+\b(((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)\.){3}((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]\d)|\d)\b : word bound [0 - 255].[0 - 255].[0 - 255].[0 - 255] word bound
+
+"""
 addresses = ["128.151.220.14","127.0.0.1","249.209.255.0","0.0.0.0"]
 badAddresses = ["209.337.14.1","230.145.09.11"]
 regex = "^((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]).){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$"
@@ -123,7 +141,7 @@ description of the function of the regular expression, plus a related example st
 	2 or more occurances of any non digit character (lets calls this sequence of characters as group 1),
 	followed by any number of characters except for a newline,
 	followed by [,
-	followed by the characters used in group 1,
+	followed by the same characters used in group 1,
 	followed by ]
 
 (d) /((.*?)\d)\s\2/
@@ -131,15 +149,15 @@ description of the function of the regular expression, plus a related example st
  any number of characters except for a newline (lets call this sequence of characters group 2), 
  followed by a digit between 0-9 inclusive,
  followed by a white space character,
- followed by the characters used in group 2
+ followed by the same characters used in group 2
 
 (e) /^[0-9]+\/\d+([+\-*\/]\=|([+]{2}|[-]{2}));$/ 
  
   starts one or more instances of a number between 0-9 inclusive, 
   followed by a forward slash, 
   followed by one or more instances of a number between 0-9 inclusive,
-  followed by one of the following 3 groups of characters
-  group 1: +, or -, or *, or / then followed by a =
+  followed by only one of the following 3 groups of characters
+  group 1: +, or -, or *, or / then followed by an =
   group 2: ++
   group 3: --
   ends with a semicolon
